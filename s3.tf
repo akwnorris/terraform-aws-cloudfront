@@ -3,7 +3,11 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "this" {
-  bucket = "static-"
+  bucket_prefix = "static-"
+}
+
+resource "aws_s3_bucket_public_access_block" "this" {
+  bucket = aws_s3_bucket.this.bucket
 
   # Block public access
   block_public_acls       = true
@@ -18,3 +22,5 @@ resource "aws_s3_object" "this" {
   source       = "index.html"
   content_type = "text/html"
 }
+
+
